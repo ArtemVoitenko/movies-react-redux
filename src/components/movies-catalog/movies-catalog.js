@@ -16,6 +16,9 @@ class MoviesCatalog extends Component {
     formVisibility: false
   };
   componentDidMount() {
+    this.getMoviesFromDb();
+  }
+  getMoviesFromDb() {
     firebase
       .database()
       .ref("/movies/")

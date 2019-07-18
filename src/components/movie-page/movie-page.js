@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import firebase from "../../firebase";
 import "./movie-info.scss";
+import Actors from "../actors/actors";
 export default class MoviePage extends Component {
   state = {
     movie: {}
@@ -20,32 +21,14 @@ export default class MoviePage extends Component {
         });
       });
   };
-  renderActors = actors => {
-    const actorsList = actors.split(", ");
-    return (
-      <div className="movie-info__actors">
-        {actorsList.map(item => {
-          return (
-            <div className="movie-info__actor">
-              <img
-                src={`https://robohash.org/${item}`}
-                alt=""
-                className="movie-info__avatar"
-              />
-              <p className="movie-info__name">{item}</p>
-            </div>
-          );
-        })}
-      </div>
-    );
-  };
+
   render() {
     const {
       movie: { Title, Stars, id, Format }
     } = this.state;
     const year = this.state.movie["Release Year"];
 
-    const actors = Stars ? this.renderActors(Stars) : null;
+    const actors = Stars ? <Actors actors={Stars} /> : null;
     return (
       <div className="container">
         <div className="row">
