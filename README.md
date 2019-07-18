@@ -1,68 +1,23 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Для того что бы запустить приложение на локальном хосте необходимо:
 
-## Available Scripts
+    1. Клонировать репозиторий
+    2. В корневой директории запустить команду "npm i"
+    3. Запустить приложение командой "npm start"
 
-In the project directory, you can run:
+При реализации приложения использовалась библиотека Redux, все ее составляющие лежат по пути "./store".. Бекенд представлен SDK Firebase.
 
-### `npm start`
+В директории services находятся вспомогательные функции, такие как, например, парсинг загружаемого документа.
+Все компоненты лежат в папке Components. Основные компоненты Movie-Page и MoviesCatalog, отвечают за страницу информации о конкретном фильме и страницу всех фильмов.
+Роут к странице информации о фильме формируется динамически по нажатию на кнопку info, исходя из id элемента.
+Внутри компонета MoviesCatalog находится логика поиска, удаления сортировки фильмов. Соответствующие методы передаються дочерним компонентам через пропсы.
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Это единственный компонент, подключенный к store, так как глубина вложенности компонентов не превышает 2 и необходимые данные и методы из store, можно передать через пропсы.
+MoviesCatalog использует компонеты Search, Store, UploadFile, Sort, createMovie . По названию компонентов понятно, кто и за что отвечает.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+MoviesPage содержит информацию о конкретном фильме. Внутри используется компонент actors.
 
-### `npm test`
+Все приложение обернуто в Provider для подключения redux > ErrorBoundry, отлавливающий ошибки внутри компонентов > Router из пакета react-router-dom для реализации роутинга.
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Роуты лежат в App.
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Каждый компонент лежит в отдельной директории, внутри которой также могут находиться стилевые файлы для компонента.
