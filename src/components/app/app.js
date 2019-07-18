@@ -6,9 +6,9 @@ import "../../styles/styles.scss";
 const App = () => {
   return (
     <Fragment>
-      <Route path="/movies-react-redux" exact component={MoviesCatalog} />
+      <Route path="/" exact component={MoviesCatalog} />
       <Route
-        path="/movies-react-redux/:id"
+        path="/:id"
         render={({ match }) => {
           return <MoviePage movieId={match.params.id} />;
         }}
