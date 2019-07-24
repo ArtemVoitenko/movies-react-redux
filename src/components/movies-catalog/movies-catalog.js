@@ -73,7 +73,7 @@ class MoviesCatalog extends Component {
   };
   sortByAlphabet = movies => {
     return [...movies].sort((a, b) => {
-      return a.Title.toLowerCase() > b.Title.toLowerCase() ? 1 : -1;
+      return a.Title.toLowerCase().localeCompare(b.Title.toLowerCase());
     });
   };
   render() {

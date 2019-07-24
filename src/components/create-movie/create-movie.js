@@ -2,16 +2,17 @@ import React, { Component, Fragment } from "react";
 import md5 from "md5";
 import firebase from "../../firebase";
 import "./movie-form.scss";
+import Dropdown from "../dropdown/dropdown";
 export default class CreateMovie extends Component {
+  dropdownItems = ["VHS", "DVD", "Blue-Ray"];
   state = {
     Title: "",
     "Release Year": "",
-    Format: "",
+    Format: this.dropdownItems[0],
     Stars: "",
     id: "",
     validationError: ""
   };
-
   typeMovieInput = e => {
     this.setState({
       [e.target.name]: e.target.value
@@ -57,6 +58,19 @@ export default class CreateMovie extends Component {
         });
       });
   };
+
+  formatChange = e => {
+    const target = e.target;
+    while (e.target !== "UL") {
+      if (target.tagName == "LI") {
+        this.setState({
+          Format: target.innerText
+        });
+        return;
+      }
+      target = target.parentNode;
+    }
+  };
   onCreateMovie = async e => {
     e.preventDefault();
     await this.setState({
@@ -77,6 +91,7 @@ export default class CreateMovie extends Component {
     const { Title, Format, Stars, id } = this.state;
     const year = this.state["Release Year"];
     const { formVisibility, showCreateForm, hideCreateForm } = this.props;
+
     return (
       <Fragment>
         <button className="btn btn-warning" onClick={showCreateForm}>
@@ -114,16 +129,12 @@ export default class CreateMovie extends Component {
                 className="movie-form__input form-control"
               />
             </label>
-            <label htmlFor="" className="movie-form__label">
-              <span className="movie-form__tip">Format</span>
-              <input
-                onChange={this.typeMovieInput}
-                type="text"
-                name="Format"
-                className="movie-form__input form-control"
-                value={Format}
-              />
-            </label>
+
+            <Dropdown
+              items={this.dropdownItems}
+              changeActive={this.formatChange}
+              activeItem={Format}
+            />
             <label htmlFor="" className="movie-form__label">
               <span className="movie-form__tip">Stars</span>
               <input
