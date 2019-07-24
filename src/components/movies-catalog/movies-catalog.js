@@ -2,18 +2,27 @@ import React, { Component } from "react";
 import MoviesList from "../movies-list/movies-list";
 import { connect } from "react-redux";
 import firebase from "../../firebase/";
-import { addMovies } from "../../store/actions";
+import {
+  addMovies,
+  toggleSuccessPopup,
+  setItemToRemove,
+  setLoading
+} from "../../store/actions";
 import UploadFile from "../upload-file/upload-file";
 import Search from "../search/search";
 import CreateMovie from "../create-movie/create-movie";
 import Sort from "../sort/sort";
 import "./movies-catalog.scss";
+import ConfirmationPopup from "../confirmation-popup/confirmation-popup";
+import SuccessPopup from "../success-popup/success-popup";
+import LoadingIndicator from "../loading-indicator/loading-indicator";
 
 class MoviesCatalog extends Component {
   state = {
     searchQuery: "",
     sort: false,
-    formVisibility: false
+    formVisibility: false,
+    confirmationVisibility: false
   };
   componentDidMount() {
     this.getMoviesFromDb();
@@ -40,13 +49,20 @@ class MoviesCatalog extends Component {
     ];
     this.props.addMoviesToStore(newMoviesArray);
   };
+  removeClicked = id => {
+    this.props.setItemToRemove(id);
+    this.setState({ confirmationVisibility: true });
+  };
   removeItemFromDb = id => {
+    this.closeConfirmPopup();
+    this.props.setLoading(true);
     firebase
       .database()
       .ref(`/movies/${id}`)
       .remove()
       .then(() => {
         this.removeItemFromStore(id);
+        this.props.setLoading(false);
       });
   };
   showCreateForm = () => {
@@ -76,13 +92,28 @@ class MoviesCatalog extends Component {
       return a.Title.toLowerCase().localeCompare(b.Title.toLowerCase());
     });
   };
+  closeConfirmPopup = () => {
+    this.setState({ confirmationVisibility: false });
+  };
   render() {
-    const { movies, addMoviesToStore } = this.props;
-    const { searchQuery, sort, formVisibility } = this.state;
+    const {
+      movies,
+      addMoviesToStore,
+      successPopupVisibility,
+      toggleSuccessPopup,
+      itemToRemove,
+      loading
+    } = this.props;
+    const {
+      searchQuery,
+      sort,
+      formVisibility,
+      confirmationVisibility
+    } = this.state;
     const moviesSorted = sort ? this.sortByAlphabet(movies) : movies;
     const moviesToShow = this.filterMovies(searchQuery, moviesSorted);
     const moviesList = movies.length ? (
-      <MoviesList onRemove={this.removeItemFromDb} movies={moviesToShow} />
+      <MoviesList onRemove={this.removeClicked} movies={moviesToShow} />
     ) : null;
 
     return (
@@ -97,25 +128,56 @@ class MoviesCatalog extends Component {
             showCreateForm={this.showCreateForm}
             formVisibility={formVisibility}
             hideCreateForm={this.hideCreateForm}
+            toggleSuccessPopup={toggleSuccessPopup}
           />
           <Sort onSortChanged={this.onSortChanged} />
         </div>
         {moviesList}
+        {successPopupVisibility ? <SuccessPopup /> : null}
+        {confirmationVisibility ? (
+          <ConfirmationPopup
+            actionConfirm={() => {
+              this.removeItemFromDb(itemToRemove);
+            }}
+            closePopup={this.closeConfirmPopup}
+          />
+        ) : null}
+        {loading ? <LoadingIndicator /> : null}
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ movies }) => {
+const mapStateToProps = ({
+  movies,
+  successPopupVisibility,
+  itemToRemove,
+  loading
+}) => {
   return {
-    movies
+    movies,
+    successPopupVisibility,
+    itemToRemove,
+    loading
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
     addMoviesToStore: movies => {
       dispatch(addMovies(movies));
+    },
+
+    toggleSuccessPopup: visibily => {
+      dispatch(toggleSuccessPopup(visibily));
+    },
+    setItemToRemove: id => {
+      dispatch(setItemToRemove(id));
+    },
+    setLoading: loading => {
+      dispatch(setLoading(loading));
     }
+
+    // toggleRemovePopup: visibily => {}
   };
 };
 export default connect(

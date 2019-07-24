@@ -1,7 +1,16 @@
 .dropdown {
+  &__list {
+    width: 100%;
+    padding: 0;
+    overflow: hidden;
+    &.active {
+      display: block;
+    }
+  }
   &__item {
     &.active {
-      background-color: black;
+      background-color: #fff;
+      color: #383838;
     }
   }
 }

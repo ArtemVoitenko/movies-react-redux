@@ -3,6 +3,7 @@ import md5 from "md5";
 import firebase from "../../firebase";
 import "./movie-form.scss";
 import Dropdown from "../dropdown/dropdown";
+import MaskedInput from "react-text-mask";
 export default class CreateMovie extends Component {
   dropdownItems = ["VHS", "DVD", "Blue-Ray"];
   state = {
@@ -41,7 +42,7 @@ export default class CreateMovie extends Component {
     }
   };
   setMovieToDb = () => {
-    const { moviesInStore } = this.props;
+    const { moviesInStore, toggleSuccessPopup } = this.props;
     firebase
       .database()
       .ref(`/movies/${md5(this.state.Title)}`)
@@ -56,20 +57,15 @@ export default class CreateMovie extends Component {
           id: "",
           validationError: ""
         });
+        toggleSuccessPopup(true);
+        setTimeout(() => {
+          toggleSuccessPopup(false);
+        }, 3000);
       });
   };
 
-  formatChange = e => {
-    const target = e.target;
-    while (e.target !== "UL") {
-      if (target.tagName == "LI") {
-        this.setState({
-          Format: target.innerText
-        });
-        return;
-      }
-      target = target.parentNode;
-    }
+  formatChange = Format => {
+    this.setState({ Format });
   };
   onCreateMovie = async e => {
     e.preventDefault();
@@ -129,12 +125,14 @@ export default class CreateMovie extends Component {
                 className="movie-form__input form-control"
               />
             </label>
-
-            <Dropdown
-              items={this.dropdownItems}
-              changeActive={this.formatChange}
-              activeItem={Format}
-            />
+            <label htmlFor="" className="movie-form__label">
+              <span className="movie-form__tip">Format</span>
+              <Dropdown
+                items={this.dropdownItems}
+                changeActive={this.formatChange}
+                activeItem={Format}
+              />
+            </label>
             <label htmlFor="" className="movie-form__label">
               <span className="movie-form__tip">Stars</span>
               <input
@@ -144,6 +142,14 @@ export default class CreateMovie extends Component {
                 className="movie-form__input form-control"
                 value={Stars}
               />
+              {/* <MaskedInput
+                mask={[/(^[A-Z]{1}[a-z]{1,14} [A-Z]{1}[a-z]{1,14}$)|(^[А-Я]{1}[а-я]{1,14} [А-Я]{1}[а-я]{1,14}$)/]}
+                onChange={this.typeMovieInput}
+                type="text"
+                name="Stars"
+                className="movie-form__input form-control"
+                value={Stars}
+              /> */}
             </label>
             <button
               className="movie-form__submit btn btn-success"
