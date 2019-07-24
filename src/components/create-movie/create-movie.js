@@ -3,8 +3,6 @@ import md5 from "md5";
 import firebase from "../../firebase";
 import "./movie-form.scss";
 import Dropdown from "../dropdown/dropdown";
-import MaskedInput from "react-text-mask";
-import { type } from "os";
 export default class CreateMovie extends Component {
   dropdownItems = ["VHS", "DVD", "Blue-Ray"];
   state = {
@@ -30,6 +28,17 @@ export default class CreateMovie extends Component {
       });
     }
   };
+  // onStarNameInput = e => {
+  //   let whiteSpaceCount = this.state.Stars.match(/ /g) || [].length;
+  //   console.log(e);
+
+  //   return whiteSpaceCount <= 2 || e.keyCode == 8
+  //     ? this.setState({
+  //         [e.target.name]: e.target.value
+  //       })
+  //     : "";
+  // };
+
   isMovieExists = (movieId, movies) => {
     const movieIdx = movies.findIndex(item => {
       return item.id === movieId;
@@ -40,6 +49,10 @@ export default class CreateMovie extends Component {
   validateMovieInputs = () => {
     const { Title, Format, Stars, id } = this.state;
     const { moviesInStore } = this.props;
+    let starsArray = Stars.split(", ");
+    const allStarsCorrectData = starsArray.every(item => {
+      return item.split(" ").length === 2;
+    });
     const year = this.state["Release Year"];
     if (!Title || !year || !Format || !Stars) {
       this.setState({
@@ -53,6 +66,11 @@ export default class CreateMovie extends Component {
       this.setState({
         validationError: "Release year must be in between 1901 and 2019 yy.",
         ["Release Year"]: ""
+      });
+    } else if (!allStarsCorrectData) {
+      this.setState({
+        validationError: `All stars must have a name and surname.
+Every stars must be divided by ","`
       });
     }
   };
@@ -157,6 +175,13 @@ export default class CreateMovie extends Component {
                 className="movie-form__input form-control"
                 value={Stars}
               />
+              {/* <input
+                onChange={this.onStarNameInput}
+                type="text"
+                name="Stars"
+                className="movie-form__input form-control"
+                value={Stars}
+              /> */}
               {/* <MaskedInput
                 mask={[/(^[A-Z]{1}[a-z]{1,14} [A-Z]{1}[a-z]{1,14}$)|(^[А-Я]{1}[а-я]{1,14} [А-Я]{1}[а-я]{1,14}$)/]}
                 onChange={this.typeMovieInput}
