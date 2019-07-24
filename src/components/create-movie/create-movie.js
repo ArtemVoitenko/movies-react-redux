@@ -70,7 +70,7 @@ export default class CreateMovie extends Component {
     } else if (!allStarsCorrectData) {
       this.setState({
         validationError: `All stars must have a name and surname.
-Every stars must be divided by ","`
+Every stars must be divided by comma and whitespace`
       });
     }
   };
