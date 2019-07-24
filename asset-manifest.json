@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/movies-react-redux/static/css/main.20b5b2fd.chunk.css",
+    "main.css": "/movies-react-redux/static/css/main.b78a9563.chunk.css",
     "main.js": "/movies-react-redux/static/js/main.30a49fbe.chunk.js",
     "main.js.map": "/movies-react-redux/static/js/main.30a49fbe.chunk.js.map",
     "runtime~main.js": "/movies-react-redux/static/js/runtime~main.fbb59805.js",
@@ -8,9 +8,9 @@
     "static/js/2.37226f07.chunk.js": "/movies-react-redux/static/js/2.37226f07.chunk.js",
     "static/js/2.37226f07.chunk.js.map": "/movies-react-redux/static/js/2.37226f07.chunk.js.map",
     "index.html": "/movies-react-redux/index.html",
-    "precache-manifest.b308c1194266c0e65e4172fb33217372.js": "/movies-react-redux/precache-manifest.b308c1194266c0e65e4172fb33217372.js",
+    "precache-manifest.ab1d3d3a8ac94c7ea9b2234a8f1ea6bb.js": "/movies-react-redux/precache-manifest.ab1d3d3a8ac94c7ea9b2234a8f1ea6bb.js",
     "service-worker.js": "/movies-react-redux/service-worker.js",
-    "static/css/main.20b5b2fd.chunk.css.map": "/movies-react-redux/static/css/main.20b5b2fd.chunk.css.map",
+    "static/css/main.b78a9563.chunk.css.map": "/movies-react-redux/static/css/main.b78a9563.chunk.css.map",
     "static/media/styles.scss": "/movies-react-redux/static/media/OpenSans-Regular.5a798cda.ttf"
   }
 }
