@@ -4,6 +4,7 @@ import firebase from "../../firebase";
 import "./movie-form.scss";
 import Dropdown from "../dropdown/dropdown";
 import MaskedInput from "react-text-mask";
+import { type } from "os";
 export default class CreateMovie extends Component {
   dropdownItems = ["VHS", "DVD", "Blue-Ray"];
   state = {
@@ -19,7 +20,16 @@ export default class CreateMovie extends Component {
       [e.target.name]: e.target.value
     });
   };
+  onYearChange = e => {
+    let value = e.target.value;
 
+    let sum = !isNaN(parseInt(value)) ? parseInt(value) : "";
+    if (value.length < 5) {
+      this.setState({
+        ["Release Year"]: sum
+      });
+    }
+  };
   isMovieExists = (movieId, movies) => {
     const movieIdx = movies.findIndex(item => {
       return item.id === movieId;
@@ -38,6 +48,11 @@ export default class CreateMovie extends Component {
     } else if (this.isMovieExists(id, moviesInStore)) {
       this.setState({
         validationError: "Movie is already exists"
+      });
+    } else if (year > 2019 || year < 1901) {
+      this.setState({
+        validationError: "Release year must be in between 1901 and 2019 yy.",
+        ["Release Year"]: ""
       });
     }
   };
@@ -60,7 +75,7 @@ export default class CreateMovie extends Component {
         toggleSuccessPopup(true);
         setTimeout(() => {
           toggleSuccessPopup(false);
-        }, 3000);
+        }, 2000);
       });
   };
 
@@ -118,7 +133,7 @@ export default class CreateMovie extends Component {
             <label htmlFor="" className="movie-form__label">
               <span className="movie-form__tip">Release year</span>
               <input
-                onChange={this.typeMovieInput}
+                onChange={this.onYearChange}
                 type="text"
                 name="Release Year"
                 value={year}
