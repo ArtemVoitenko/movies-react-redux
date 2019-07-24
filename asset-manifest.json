@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/movies-react-redux/static/css/main.20b5b2fd.chunk.css",
-    "main.js": "/movies-react-redux/static/js/main.5337b693.chunk.js",
-    "main.js.map": "/movies-react-redux/static/js/main.5337b693.chunk.js.map",
+    "main.js": "/movies-react-redux/static/js/main.9d3cda28.chunk.js",
+    "main.js.map": "/movies-react-redux/static/js/main.9d3cda28.chunk.js.map",
     "runtime~main.js": "/movies-react-redux/static/js/runtime~main.fbb59805.js",
     "runtime~main.js.map": "/movies-react-redux/static/js/runtime~main.fbb59805.js.map",
     "static/js/2.37226f07.chunk.js": "/movies-react-redux/static/js/2.37226f07.chunk.js",
     "static/js/2.37226f07.chunk.js.map": "/movies-react-redux/static/js/2.37226f07.chunk.js.map",
     "index.html": "/movies-react-redux/index.html",
-    "precache-manifest.2bd27cbb699ac070961e571b3c36a7bf.js": "/movies-react-redux/precache-manifest.2bd27cbb699ac070961e571b3c36a7bf.js",
+    "precache-manifest.acffc706d08c23831887b049a2afdf77.js": "/movies-react-redux/precache-manifest.acffc706d08c23831887b049a2afdf77.js",
     "service-worker.js": "/movies-react-redux/service-worker.js",
     "static/css/main.20b5b2fd.chunk.css.map": "/movies-react-redux/static/css/main.20b5b2fd.chunk.css.map",
     "static/media/styles.scss": "/movies-react-redux/static/media/OpenSans-Regular.5a798cda.ttf"
